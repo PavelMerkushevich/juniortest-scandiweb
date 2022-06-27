@@ -1,0 +1,17 @@
+{
+    "name": "pavel/test-app",
+    "description": "Test app",
+    "autoload": {
+        "psr-4": {
+            "app\\": "site/",
+            "components\\": "components/"
+        }
+    },
+    "authors": [
+        {
+            "name": "PavelMerkushevich",
+            "email": "11mpa@mail.ru"
+        }
+    ],
+    "require": {}
+}
