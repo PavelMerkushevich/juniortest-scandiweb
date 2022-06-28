@@ -2,13 +2,11 @@
 
 namespace app\controllers;
 
-//use components\web\Controller;
-
-class SiteController
+class AaaController
 {
     public function actionIndex()
     {
-        echo 'Index!';
+        echo 'Index! aaa';
         //(new \components\routing\Router)->redirect("site/about");
     }
 
@@ -20,8 +18,5 @@ class SiteController
     public function actionTest(){
         echo "Test";
     }
-    public function actionError(){
-        
-    }
-    //TODO: сделай абстрактный класс контроллер с методом render()
+    //TODO: сделай actionX и абстрактный класс контроллер с методом render()
 }

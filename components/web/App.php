@@ -4,40 +4,35 @@ namespace components\web;
 
 use components\routing\Router;
 
-class App{
+class App extends \components\base\App {
 
 	public $configFile;
-	public $config;
-	public $params;
+	public $configPackage;
 
 	public function __construct($configFile = null) {
 		$this->configFile = isset($configFile) ? $configFile : $_SERVER['DOCUMENT_ROOT'] . '/site/config/config.php';
 		require $this->configFile;
-		$this->config = $config;
-		$this->params = $params;
+		$this->configPackage = compact('config', 'params', 'db');
 	}
 
 	public function run(){
-		$router = new Router($this->config);
+		$router = new Router($this->configPackage);
 		$router->route();
 	}
 
-	public static function getConfig($configFile = null){
+	public static function getConfigPackage($configFile = null){
 		if(isset($configFile)){
 			$app = new self($configFile);
 		} else {
 			$app = new self;
 		}
 		
-		return $app->config;
+		return $app->configPackage;
 	}
 
-	public static function getParams($configFile = null){
-		if(isset($configFile)){
-			$app = new self($configFile);
-		} else {
-			$app = new self;
-		}
-		return $app->params;
+	public static function getConfigFile(){
+		$app = new self;
+		return $app->configFile;
 	}
+
 }

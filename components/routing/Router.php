@@ -6,15 +6,22 @@ use components\httpErrorsHandler\ErrorHandler;
 use components\web\App;
 
 class Router {
+	public $configPackage;
 	private $pages = [];
 	public $url;
-	public $defaultController = "site";
+	public $defaultController;	
+	public $server;
 
-	public function __construct($config = null){
-		
-		$config = isset($config) ? $config : App::getConfig();
+	public function __construct($configPackage = null){		
+		if(!isset($configPackage)){
+			$configPackage = App::getConfigPackage();
+		}
+		extract($configPackage);
+		$this->configPackage = $configPackage;
 		$this->pages = $config['components']['router']['rules'];
 		$this->url = self::getUrl();
+		$this->defaultController = $config['components']['router']['defaultController'];
+		$this->server = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME']."/";
 	}
 
 	public function addRoute($url, $pathToAction) {
@@ -22,91 +29,118 @@ class Router {
 	}
 
 	public function route($url = null) {
-		$url = isset($url) ? $url : $this->url;
+		if(!isset($url)){
+			$url = $this->url;
+		}
+		$this->checkUrlUpperCase($url);
 		$this->checkPreetyUrl($url);
-		$path = isset($this->pages[$url]) ? $this->pages[$url] : $url;
-		$pathInArray = explode("/", $path, 2);
-		//TODO: можешь реализовать вложенность контроллеров в папках ->  
-		// убери 2 и сделай проверку массива на количество значений ->
-		// подставь их в путь к контроллеру
-		if(isset($pathInArray[1])) {
-			$this->checkUrlUpperCase($pathInArray[1], $pathInArray[0]);
-			$controllerName = ucfirst(strtolower($pathInArray[0]));
-			$action = strtolower($pathInArray[1]);
-			$controllerFullName = "app\controllers\\".$controllerName."Controller";
-		} else {
-			$this->checkUrlUpperCase($path);						
-			if($path === "index") {
-				$action = strtolower($path);
-				$controllerName = ucfirst(strtolower($this->defaultController));
-				$controllerFullName = "app\controllers\\".$controllerName."Controller";		
-			}else{
-                (new ErrorHandler(ErrorHandler::$DEFAULT_ERROR))->renderError();
-			}
-
-		}
-		if (class_exists($controllerFullName)) {
-    		$controller = new $controllerFullName;
-    		if(method_exists($controller, $action)){
-    			$controller->$action();
-    		}else{
-    			(new ErrorHandler(ErrorHandler::$DEFAULT_ERROR))->renderError();
-    		}  		
+		if(isset($this->pages[$url])){
+			$path = $this->pages[$url];
 		}else{
-			(new ErrorHandler(ErrorHandler::$DEFAULT_ERROR))->renderError();
+			if($url === "/"){
+				$path = $url;			
+			} else {
+				$path = ltrim($url, "/");
+			}
 		}
-
+		$this->checkIndex($path);
+		$pathInArray = explode("/", $path, 2);
+		if(isset($pathInArray[1])) {
+			$controllerName = $this->getUpperName($pathInArray[0]);
+			$action = $this->getUpperName($pathInArray[1], true);	
+			$controllerFullName = "app\controllers\\".$controllerName."Controller";
+		} else {						
+			$controllerNameDirty = $path;
+			$controllerName = $this->getUpperName($controllerNameDirty);
+			$action = "actionIndex";
+			$controllerFullName = "app\controllers\\".$controllerName."Controller";
+		}
+		$this->checkExistsAndRun($controllerFullName, $action);
 	}
 
 	public function redirect($url){
-		if($newUrl = array_search($url, $this->pages)){
-			$url = $newUrl;
+		if($preetyUrl = array_search($url, $this->pages)){
+			$url = $preetyUrl;
 		} 
-		$server = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME']."/";
-		$new_url = $server . $url; 
-		
-		header("Location: " . $new_url);
+		$fullUrl = $this->server . $url; 	
+		header("Location: " . $fullUrl);
 		die();
 	}
 
 	public static function getUrl() {
 		$urlDirty = $_SERVER['REQUEST_URI'];
-		if($urlDirty === '/'){
-			$url = "index";
+		if($urlDirty !== "/"){
+			$url = rtrim($urlDirty, "/");
+			// if($url === 'index'){
+			// 	$url = '/';
+			// }
 		}else{
-			$url = rtrim(ltrim($urlDirty, '/'),'/');
-		}		
+			$url = $urlDirty;
+		}	
 		return $url;
 	}
-
-	private function checkPreetyUrl($url){
-		if(in_array($url, $this->pages)){
-			(new ErrorHandler(ErrorHandler::$DEFAULT_ERROR))->renderError();
-		}
-	}
-
-	private function checkUrlUpperCase($actionName, $controllerName = null){
-		if(isset($controllerName)){
-			$controllerNameLetters = str_split($controllerName);
-			foreach($controllerNameLetters as $letter){
-				if(ctype_upper($letter)){
-					$server = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME']."/";
-					$new_url = $server . strtolower($controllerName) . "/" . strtolower($actionName); 
-					header("Location: " . $new_url);
-					die();
-				}
-			}
-		}	
-
-		$actionNameLetters = str_split($actionName);
-		foreach($actionNameLetters as $letter){
+	private function checkUrlUpperCase($url){		
+		$url = mb_substr($url, 1);
+		$urlLetters = str_split($url);
+		foreach($urlLetters as $letter){
 			if(ctype_upper($letter)){
-				$server = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME']."/";
-				$new_url = isset($controllerName)? $server . $controllerName . "/" . strtolower($actionName) : $server . strtolower($actionName); 
-				header("Location: " . $new_url);
+				$newUrl = $this->server . strtolower($url); 
+				header("Location: " . $newUrl);
 				die();
 			}
 		}
 	}
+
+	private function checkPreetyUrl($url){
+		if(in_array(ltrim($url, "/"), $this->pages)){
+			(new ErrorHandler(ErrorHandler::$DEFAULT_ERROR, null, $this->configPackage))->renderError();
+		}
+	}
+
+	private function checkIndex($path){
+		if($path === "/" || $path === "index") {
+			$action = "actionIndex";
+			$controllerName = ucfirst(strtolower($this->defaultController));
+			$controllerFullName = "app\controllers\\".$controllerName."Controller";	
+			$this->checkExistsAndRun($controllerFullName, $action);
+
+		}
+	}
+
+	private function getUpperName($notUpperName, $action = false){
+		if(str_contains($notUpperName, "-")){
+			$upperName = "";
+			$nameParts = explode("-", $notUpperName);
+			foreach($nameParts as $part){
+				$upperName .= ucfirst($part);
+			}
+			if($action){
+				$upperName = "action" . $upperName;
+			}
+		}else{
+			if($action){
+				$upperName = "action" . ucfirst($notUpperName);
+			}else{
+				$upperName = ucfirst($notUpperName);
+			}			
+		}
+		return $upperName;
+	}
+
+	private function checkExistsAndRun($controllerFullName, $action){
+		if (class_exists($controllerFullName)) {
+    		$controller = new $controllerFullName;
+    		if(method_exists($controller, $action)){
+    			$controller->$action();
+    			die();
+    		}else{
+    			(new ErrorHandler(ErrorHandler::$DEFAULT_ERROR, null, $this->configPackage))->renderError();
+    		}  		
+		}else{
+			(new ErrorHandler(ErrorHandler::$DEFAULT_ERROR, null, $this->configPackage))->renderError();
+		}
+	}
+
+	
 }
 // ['index' => 'main/index']
