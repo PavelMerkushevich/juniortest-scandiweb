@@ -10,7 +10,7 @@ class Router {
 	private $pages = [];
 	public $url;
 	public $defaultController;	
-	public $server;
+	public $site;
 
 	public function __construct($configPackage = null){		
 		if(!isset($configPackage)){
@@ -21,7 +21,7 @@ class Router {
 		$this->pages = $config['components']['router']['rules'];
 		$this->url = self::getUrl();
 		$this->defaultController = $config['components']['router']['defaultController'];
-		$this->server = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME']."/";
+		$this->site = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME']."/";
 	}
 
 	public function addRoute($url, $pathToAction) {
@@ -62,7 +62,7 @@ class Router {
 		if($preetyUrl = array_search($url, $this->pages)){
 			$url = $preetyUrl;
 		} 
-		$fullUrl = $this->server . $url; 	
+		$fullUrl = $this->site . $url; 	
 		header("Location: " . $fullUrl);
 		die();
 	}
@@ -84,7 +84,7 @@ class Router {
 		$urlLetters = str_split($url);
 		foreach($urlLetters as $letter){
 			if(ctype_upper($letter)){
-				$newUrl = $this->server . strtolower($url); 
+				$newUrl = $this->site . strtolower($url); 
 				header("Location: " . $newUrl);
 				die();
 			}
@@ -108,9 +108,9 @@ class Router {
 	}
 
 	private function getUpperName($notUpperName, $action = false){
-		if(str_contains($notUpperName, "-")){
-			$upperName = "";
+		if(str_contains($notUpperName, "-")){	
 			$nameParts = explode("-", $notUpperName);
+			$upperName = "";
 			foreach($nameParts as $part){
 				$upperName .= ucfirst($part);
 			}
@@ -129,7 +129,7 @@ class Router {
 
 	private function checkExistsAndRun($controllerFullName, $action){
 		if (class_exists($controllerFullName)) {
-    		$controller = new $controllerFullName;
+    		$controller = new $controllerFullName($this->configPackage);
     		if(method_exists($controller, $action)){
     			$controller->$action();
     			die();
@@ -143,4 +143,3 @@ class Router {
 
 	
 }
-// ['index' => 'main/index']

@@ -4,7 +4,11 @@ namespace components\base;
 
 abstract class Controller
 {
-    abstract protected function actionIndex();
-    abstract protected function render();
-    abstract protected function redirect();
+    private $configPackage;
+    protected $defaultLayout;
+
+    abstract public function actionIndex();
+    abstract public function actionError($errCode, $errText);
+    abstract protected function render($view, $variables=[]);
+    abstract protected function redirect();   
 }

@@ -32,7 +32,7 @@ class ErrorHandler {
 		$pathInArray = explode("/", $path, 2);
 		$controllerFullName = "app\controllers\\" . ucfirst($pathInArray[0])."Controller";
 		$action = "action" . ucfirst($pathInArray[1]);	
-		$controller = new $controllerFullName;
+		$controller = new $controllerFullName($this->configPackage);
 		$controller->$action($this->errCode, $this->errText);
 		// $errorPage = new View;
 		// $errorView = $_SERVER['DOCUMENT_ROOT'] . '/components/httpErrorsHandler/ErrorPage.php';

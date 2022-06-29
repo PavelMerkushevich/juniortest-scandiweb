@@ -9,6 +9,7 @@
     <body>
         <div id="wrapper">
             <?php $this->renderView();?>
+            <?php var_dump(components\web\Settings::config()->config) ?>
         </div>
         <script src="libraries/bootstrap/js/bootstrap.min.js"></script>
         <script src="libraries/masonry/masonry.pkgd.min.js"></script>

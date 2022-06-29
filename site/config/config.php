@@ -13,9 +13,14 @@ $config=[
 				'/about' => 'site/about',
 				// '/about-new' => 'site-new/about-new',
 			]
-		]
+		],
 		'httpErrorsHandler' => [
 			'defaultAction' => 'site/error'
+		],
+		'controller' => [
+			'defaultLayout' => 'main',
+			'defaultIndexView' => 'index',
+			'errorView' => 'error'
 		]
 	]
 ];
