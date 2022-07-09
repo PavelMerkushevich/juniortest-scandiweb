@@ -5,7 +5,7 @@ $db = []; //Вынеси $db в другой файл
 $params = require __DIR__ . '/params.php';
 
 $config=[
-	'id' => 'test-app',
+	'id' => 'juniortest',
 	'components' => [
 		'router' => [
 			'defaultController' => 'site',
