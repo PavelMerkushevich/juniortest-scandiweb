@@ -1,6 +1,6 @@
 {
-    "name": "pavel/test-app",
-    "description": "Test app",
+    "name": "pavel/juniortest-scandiweb",
+    "description": "Scandiweb junior test task",
     "autoload": {
         "psr-4": {
             "app\\": "site/",

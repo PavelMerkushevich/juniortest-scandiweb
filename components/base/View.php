@@ -2,11 +2,9 @@
 
 namespace components\base;
 
-abstract class View
-{
-    private $layoutFile;
-    private $viewFile;
-    
+abstract class View {
+
     abstract protected function render($viewFile, $layoutFile, $variables = []);
+
     abstract protected function renderView();
 }

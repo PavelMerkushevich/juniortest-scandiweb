@@ -1,22 +1,22 @@
 <?php return array(
     'root' => array(
-        'name' => 'pavel/test-app',
         'pretty_version' => '1.0.0+no-version-set',
         'version' => '1.0.0.0',
-        'reference' => NULL,
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
+        'reference' => NULL,
+        'name' => 'pavel/juniortest-scandiweb',
         'dev' => true,
     ),
     'versions' => array(
-        'pavel/test-app' => array(
+        'pavel/juniortest-scandiweb' => array(
             'pretty_version' => '1.0.0+no-version-set',
             'version' => '1.0.0.0',
-            'reference' => NULL,
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
+            'reference' => NULL,
             'dev_requirement' => false,
         ),
     ),
