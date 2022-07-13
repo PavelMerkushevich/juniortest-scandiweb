@@ -4,6 +4,7 @@ namespace components\web;
 
 use components\web\AppConfig;
 use components\web\View;
+use components\routing\Router;
 
 class Controller extends \components\base\Controller {
 
@@ -48,8 +49,8 @@ class Controller extends \components\base\Controller {
         return $_SERVER['DOCUMENT_ROOT'] . "/site/views/{$viewFolderName}/{$view}.php";
     }
 
-    protected function redirect() {
-        
+    protected function redirect($url) {
+        (new Router())->redirect($url);
     }
 
 }

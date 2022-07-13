@@ -10,5 +10,5 @@ abstract class Controller {
 
     abstract protected function render($view, $variables = []);
 
-    abstract protected function redirect();
+    abstract protected function redirect($url);
 }

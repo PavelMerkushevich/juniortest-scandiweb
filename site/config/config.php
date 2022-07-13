@@ -11,7 +11,7 @@ $config = [
             'defaultController' => 'site',
             'rules' => [
                 '/about' => 'site/about',
-            // '/about-new' => 'site-new/about-new',
+                '/add-product' => 'site/add-product'
             ]
         ],
         'httpErrorsHandler' => [

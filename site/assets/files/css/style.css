@@ -1,0 +1,91 @@
+@import url("https://fonts.googleapis.com/css2?family=Signika+Negative:wght@300&display=swap");
+body {
+  padding: 0;
+  margin: 0;
+}
+
+#wrapper {
+  width: 95%;
+  margin: auto;
+}
+
+header {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  align-items: end;
+  width: 100%;
+  height: 100px;
+  border-bottom: 1px solid black;
+}
+
+.header-content {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 50%;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.title {
+  margin-bottom: 0;
+  font-family: "Signika Negative", sans-serif;
+}
+
+.button-container {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-button {
+  margin-left: 10px;
+}
+
+.main-content {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  width: auto;
+  margin: 20px 5px 0 5px;
+}
+
+.product {
+  width: 200px;
+  height: 170px;
+  margin-bottom: 30px;
+  border: 1px solid black;
+  border-radius: 3px;
+}
+
+.delete-checkbox-container {
+  position: absolute;
+  margin-left: 5px;
+}
+
+.product-data-container {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+/*# sourceMappingURL=style.css.map */

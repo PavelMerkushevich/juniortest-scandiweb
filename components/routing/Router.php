@@ -3,42 +3,33 @@
 namespace components\routing;
 
 use components\httpErrorsHandler\ErrorHandler;
+use components\routing\UrlHelper;
 use components\web\AppConfig;
 
-class Router {
+class Router extends \components\base\Router {
 
-    private $pages = [];
+    private $customUrl = [];
     public $url;
     public $defaultController;
     public $site;
 
     public function __construct() {
         $config = (new AppConfig())->getConfig();
-        $this->pages = $config['components']['router']['rules'];
-        $this->url = self::getUrl();
+        $this->customUrl = $config['components']['router']['rules'];
+        $this->url = UrlHelper::getThisPageUrl();
         $this->defaultController = $config['components']['router']['defaultController'];
         $this->site = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['SERVER_NAME'] . "/";
     }
 
     public function addRoute($url, $pathToAction) {
-        $this->pages[$url] = $pathToAction;
+        $this->customUrl[$url] = $pathToAction;
     }
 
-    public function route($url = null) {
-        if (!isset($url)) {
-            $url = $this->url;
-        }
+    public function route() {
+        $url = $this->url;
         $this->checkUrlUpperCase($url);
-        $this->checkPreetyUrl($url);
-        if (isset($this->pages[$url])) {
-            $path = $this->pages[$url];
-        } else {
-            if ($url === "/") {
-                $path = $url;
-            } else {
-                $path = ltrim($url, "/");
-            }
-        }
+        $this->checkCustomUrl($url);
+        $path = $this->getPath($url);
         $this->checkIndex($path);
         $pathInArray = explode("/", $path, 2);
         if (isset($pathInArray[1])) {
@@ -54,32 +45,15 @@ class Router {
         $this->checkExistsAndRun($controllerFullName, $action);
     }
 
-    public function redirect($url) {
-        //Поправь это
-        if ($preetyUrl = array_search($url, $this->pages)) {
-            $url = $preetyUrl;
-        }
-        $fullUrl = $this->site . $url;
+    public static function redirect($url) {
+        $fullUrl = UrlHelper::getFullUrl($url);
         header("Location: " . $fullUrl);
         die();
     }
 
-    public static function getUrl() {
-        $urlDirty = $_SERVER['REQUEST_URI'];
-        if ($urlDirty !== "/") {
-            $url = rtrim($urlDirty, "/");
-            // if($url === 'index'){
-            // 	$url = '/';
-            // }
-        } else {
-            $url = $urlDirty;
-        }
-        return $url;
-    }
-
     private function checkUrlUpperCase($url) {
-        $url = mb_substr($url, 1);
-        $urlLetters = str_split($url);
+        $trimmedUrl = mb_substr($url, 1);
+        $urlLetters = str_split($trimmedUrl);
         foreach ($urlLetters as $letter) {
             if (ctype_upper($letter)) {
                 $newUrl = $this->site . strtolower($url);
@@ -89,16 +63,29 @@ class Router {
         }
     }
 
-    private function checkPreetyUrl($url) {
-        if (in_array(ltrim($url, "/"), $this->pages)) {
+    private function checkCustomUrl($url) {
+        if (in_array(mb_substr($url, 1), $this->customUrl)) {
             (new ErrorHandler(ErrorHandler::$DEFAULT_ERROR))->renderError();
         }
+    }
+    
+    private function getPath($url) {
+        if (isset($this->customUrl[$url])) {
+            $path = $this->customUrl[$url];
+        } else {
+            if ($url === "/") {
+                $path = $url;
+            } else {  
+                $path = mb_substr($url, 1);
+            }
+        }
+        return $path;
     }
 
     private function checkIndex($path) {
         if ($path === "/" || $path === "index") {
             $action = "actionIndex";
-            $controllerName = ucfirst(strtolower($this->defaultController));
+            $controllerName = ucfirst($this->defaultController);
             $controllerFullName = "app\controllers\\" . $controllerName . "Controller";
             $this->checkExistsAndRun($controllerFullName, $action);
         }

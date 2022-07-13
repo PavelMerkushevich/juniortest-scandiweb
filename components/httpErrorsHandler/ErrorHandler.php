@@ -3,9 +3,8 @@
 namespace components\httpErrorsHandler;
 
 use components\web\AppConfig;
-use components\web\View;
 
-class ErrorHandler {
+class ErrorHandler extends \components\base\ErrorHandler {
 
     protected $config;
     private $errCode;
@@ -29,10 +28,6 @@ class ErrorHandler {
         $action = "action" . ucfirst($pathInArray[1]);
         $controller = new $controllerFullName();
         $controller->$action($this->errCode, $this->errText);
-        // $errorPage = new View;
-        // $errorView = $_SERVER['DOCUMENT_ROOT'] . '/components/httpErrorsHandler/ErrorPage.php';
-        // $errorPage->render($errorView, null, $this->errCode, $this->errText);
-        // die();
     }
 
 }
