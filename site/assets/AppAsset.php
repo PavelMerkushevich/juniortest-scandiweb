@@ -1,13 +1,23 @@
 <?php
 
-namespace app\assets; 
+namespace app\assets;
 
 class AppAsset extends \components\web\Asset {
+
     public $css = [
-        'css/style.css',
-        'libraries/bootstrap/css/bootstrap.min.css'
+        'global' => [
+            'css/style.css',
+            'libraries/bootstrap/css/bootstrap.min.css'
+        ]
     ];
     public $js = [
-        'libraries/bootstrap/js/bootstrap.min.js'
+        'global' => [
+            'libraries/bootstrap/js/bootstrap.min.js',
+        ],
+        'site/index' => [
+            'libraries/masonry/masonry.pkgd.min.js',
+            'js/grid.js'
+        ],
     ];
+
 }

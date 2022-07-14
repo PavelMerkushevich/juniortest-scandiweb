@@ -4,7 +4,9 @@ namespace components\base;
 
 abstract class View {
 
-    abstract protected function render($viewFile, $layoutFile, $variables = []);
+    abstract public function render($viewFile, $layoutFile, $variables, $path);
 
-    abstract protected function renderView();
+    abstract public function head();
+
+    abstract public function endBody();
 }

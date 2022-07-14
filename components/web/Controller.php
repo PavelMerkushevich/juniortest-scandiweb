@@ -30,27 +30,33 @@ class Controller extends \components\base\Controller {
         $layout = isset($this->layout) ? $this->layout : $this->defaultLayout;
         $layoutFile = $_SERVER['DOCUMENT_ROOT'] . "/site/views/layout/{$layout}.php";
         $viewFile = $this->getViewFile($view);
+        $path = $this->getControllerNameInLC() . "/{$view}";
         $page = new View();
-        $page->render($viewFile, $layoutFile, $variables);
-    }
-
-    private function getViewFile($view) {
-        $controllerFullName = substr(strrchr(get_class($this), "\\"), 1);
-        $controllerName = strstr($controllerFullName, "Controller", true);
-        $controllerNameLetters = str_split(lcfirst($controllerName));
-        $viewFolderName = "";
-        foreach ($controllerNameLetters as $letter) {
-            if (!ctype_upper($letter)) {
-                $viewFolderName .= $letter;
-            } else {
-                $viewFolderName .= "-" . lcfirst($letter);
-            }
-        }
-        return $_SERVER['DOCUMENT_ROOT'] . "/site/views/{$viewFolderName}/{$view}.php";
+        $page->render($viewFile, $layoutFile, $variables, $path);
     }
 
     protected function redirect($url) {
-        (new Router())->redirect($url);
+        Router::redirect($url);
+    }
+
+    private function getViewFile($view) {
+        $viewFolderName = $this->getControllerNameInLC();
+        return $_SERVER['DOCUMENT_ROOT'] . "/site/views/{$viewFolderName}/{$view}.php";
+    }
+
+    private function getControllerNameInLC() {
+        $controllerFullName = substr(strrchr(get_class($this), "\\"), 1);
+        $controllerName = strstr($controllerFullName, "Controller", true);
+        $controllerNameLetters = str_split(lcfirst($controllerName));
+        $controllerNameInLC = "";
+        foreach ($controllerNameLetters as $letter) {
+            if (!ctype_upper($letter)) {
+                $controllerNameInLC .= $letter;
+            } else {
+                $controllerNameInLC .= "-" . lcfirst($letter);
+            }
+        }
+        return $controllerNameInLC;
     }
 
 }

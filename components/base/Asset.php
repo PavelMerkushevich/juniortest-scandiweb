@@ -3,6 +3,8 @@
 namespace components\base;
 
 abstract class Asset {
-    
-    abstract public function register();
+
+    abstract public function getHead($title);
+
+    abstract public function getEndBody();
 }
