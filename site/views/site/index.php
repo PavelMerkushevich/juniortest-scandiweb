@@ -2,14 +2,14 @@
 
 use components\routing\UrlHelper;
 
-const TITLE = "Index";
+$this->title = "Index";
 ?>
 
 <header>
     <div class="header-content">
         <h1 class="title">Product List</h1>
         <div class="button-container">
-            <a href="<?php UrlHelper::getLink('site/add-product') ?>">
+            <a href="<?= UrlHelper::getLink('site/add-product') ?>">
                 <button class="btn btn-success header-button">ADD</button>
             </a>
             <button id="delete-product-btn" class="btn btn-danger header-button">MASS DELETE</button>

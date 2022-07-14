@@ -2,44 +2,51 @@
 
 namespace components\web;
 
-class AppConfig extends \components\base\AppConfig {
+class AppConfig extends \components\base\AppConfig
+{
 
-    private $config;
-    private $params;
-    private $dbConnConfig;
-    private $configFile;
+    private array $config;
+    private array $params;
+    private array $dbConnConfig;
+    private string $configFilePath;
 
-    public function __construct($configFileName = null) {
+    public function __construct(string $configFileName = null)
+    {
         if (isset($configFileName)) {
-            $configFile = $_SERVER['DOCUMENT_ROOT'] . "/site/config/{$configFileName}.php";
+            $configFilePath = $_SERVER['DOCUMENT_ROOT'] . "/site/config/{$configFileName}.php";
         } else {
-            $configFile = $_SERVER['DOCUMENT_ROOT'] . "/site/config/config.php";
+            $configFilePath = $_SERVER['DOCUMENT_ROOT'] . "/site/config/config.php";
         }
-        require $configFile;
+        require $configFilePath;
         $this->config = $config;
         $this->params = $params;
         $this->dbConnConfig = $db;
-        $this->configFile = $configFile;
+        $this->configFilePath = $configFilePath;
     }
 
-    public function getConfig() {
+    public function getConfig(): array
+    {
         return $this->config;
     }
 
-    public function getParams() {
+    public function getParams(): array
+    {
         return $this->params;
     }
 
-    public function getDbConnConfig() {
+    public function getDbConnConfig(): array
+    {
         return $this->dbConnConfig;
     }
 
-    public function getConfigFile() {
-        return $this->configFile;
+    public function getConfigFilePath(): string
+    {
+        return $this->configFilePath;
     }
 
-    public function getConfigPackage() {
-        $configPackage = ["config" => $this->config, "params" => $this->params, "dbConnConfig" => $this->dbConnConfig] ;
+    public function getConfigPackage(): array
+    {
+        $configPackage = ["config" => $this->config, "params" => $this->params, "dbConnConfig" => $this->dbConnConfig];
         return $configPackage;
     }
 

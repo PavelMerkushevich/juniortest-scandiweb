@@ -5,15 +5,18 @@ namespace components\routing;
 use components\httpErrorsHandler\ErrorHandler;
 use components\routing\UrlHelper;
 use components\web\AppConfig;
+use JetBrains\PhpStorm\NoReturn;
 
-class Router extends \components\base\Router {
+class Router extends \components\base\Router
+{
 
-    private $customUrl = [];
-    public $url;
-    public $defaultController;
-    public $site;
+    private array $customUrl = [];
+    public string $url;
+    public string $defaultController;
+    public string $site;
 
-    public function __construct() {
+    public function __construct()
+    {
         $config = (new AppConfig())->getConfig();
         $this->customUrl = $config['components']['router']['rules'];
         $this->url = UrlHelper::getThisPageUrl();
@@ -21,11 +24,13 @@ class Router extends \components\base\Router {
         $this->site = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['SERVER_NAME'] . "/";
     }
 
-    public function addRoute($url, $pathToAction) {
+    public function addRoute($url, $pathToAction): void
+    {
         $this->customUrl[$url] = $pathToAction;
     }
 
-    public function route() {
+    public function route(): void
+    {
         $url = $this->url;
         $this->checkUrlUpperCase($url);
         $this->checkCustomUrl($url);
@@ -35,54 +40,56 @@ class Router extends \components\base\Router {
         if (isset($pathInArray[1])) {
             $controllerName = $this->getUpperName($pathInArray[0]);
             $action = $this->getUpperName($pathInArray[1], true);
-            $controllerFullName = "app\controllers\\" . $controllerName . "Controller";
         } else {
             $controllerNameDirty = $path;
             $controllerName = $this->getUpperName($controllerNameDirty);
             $action = "actionIndex";
-            $controllerFullName = "app\controllers\\" . $controllerName . "Controller";
         }
+        $controllerFullName = "app\controllers\\" . $controllerName . "Controller";
         $this->checkExistsAndRun($controllerFullName, $action);
     }
 
-    public static function redirect($url) {
+    public static function redirect(string $url): void
+    {
         $fullUrl = UrlHelper::getFullUrl($url);
         header("Location: " . $fullUrl);
         die();
     }
 
-    private function checkUrlUpperCase($url) {
+    private function checkUrlUpperCase(string $url): void
+    {
         $trimmedUrl = mb_substr($url, 1);
         $urlLetters = str_split($trimmedUrl);
         foreach ($urlLetters as $letter) {
             if (ctype_upper($letter)) {
-                $newUrl = $this->site . strtolower($url);
-                header("Location: " . $newUrl);
-                die();
+                self::redirect(strtolower($url));
             }
         }
     }
 
-    private function checkCustomUrl($url) {
+    private function checkCustomUrl(string $url): void
+    {
         if (in_array(mb_substr($url, 1), $this->customUrl)) {
             (new ErrorHandler(ErrorHandler::$DEFAULT_ERROR))->renderError();
         }
     }
-    
-    private function getPath($url) {
+
+    private function getPath(string $url): string
+    {
         if (isset($this->customUrl[$url])) {
             $path = $this->customUrl[$url];
         } else {
             if ($url === "/") {
                 $path = $url;
-            } else {  
+            } else {
                 $path = mb_substr($url, 1);
             }
         }
         return $path;
     }
 
-    private function checkIndex($path) {
+    private function checkIndex(string $path): void
+    {
         if ($path === "/" || $path === "index") {
             $action = "actionIndex";
             $controllerName = ucfirst($this->defaultController);
@@ -91,8 +98,9 @@ class Router extends \components\base\Router {
         }
     }
 
-    private function getUpperName($notUpperName, $action = false) {
-        if (str_contains($notUpperName, "-")) {
+    private function getUpperName(string $notUpperName, bool $action = false): string
+    {
+        if (stripos($notUpperName, "-")) {
             $nameParts = explode("-", $notUpperName);
             $upperName = "";
             foreach ($nameParts as $part) {
@@ -108,10 +116,12 @@ class Router extends \components\base\Router {
                 $upperName = ucfirst($notUpperName);
             }
         }
+
         return $upperName;
     }
 
-    private function checkExistsAndRun($controllerFullName, $action) {
+    private function checkExistsAndRun(string $controllerFullName, string $action): void
+    {
         if (class_exists($controllerFullName)) {
             $controller = new $controllerFullName();
             if (method_exists($controller, $action)) {

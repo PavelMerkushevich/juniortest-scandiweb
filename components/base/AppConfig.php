@@ -2,15 +2,15 @@
 
 namespace components\base;
 
-abstract class AppConfig {
-
+abstract class AppConfig
+{
     abstract public function getConfig();
 
     abstract public function getParams();
 
     abstract public function getDbConnConfig();
 
-    abstract public function getConfigFile();
+    abstract public function getConfigFilePath();
 
     abstract public function getConfigPackage();
 }

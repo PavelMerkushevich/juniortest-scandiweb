@@ -2,14 +2,15 @@
 
 namespace components\web;
 
-class Asset extends \components\base\Asset {
+class Asset extends \components\base\Asset
+{
+    protected array $css;
+    protected array $js;
+    protected string $cssBlock = "";
+    protected string $jsBlock = "";
 
-    protected $css;
-    protected $js;
-    protected $cssBlock;
-    protected $jsBlock;
-
-    public function __construct($pathToThisView) {
+    public function __construct(string $pathToThisView)
+    {
         foreach ($this->css as $pathToFileView => $files) {
             if ($pathToFileView === "global" || $pathToFileView === $pathToThisView) {
                 foreach ($files as $file) {
@@ -28,14 +29,19 @@ class Asset extends \components\base\Asset {
         }
     }
 
-    public function getHead($title) {
-        $head = $this->cssBlock . "<title>{$title}</title>";
+    public function getHead(string $title): string
+    {
+        if ($title !== "") {
+            $head = $this->cssBlock . "<title>{$title}</title>";
+        } else {
+            $head = $this->cssBlock;
+        }
         return $head;
     }
 
-    public function getEndBody() {
+    public function getEndBody(): string
+    {
         $endBody = $this->jsBlock;
         return $endBody;
     }
-
 }

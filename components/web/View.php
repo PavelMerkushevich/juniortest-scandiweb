@@ -2,47 +2,54 @@
 
 namespace components\web;
 
-class View extends \components\base\View {
+class View extends \components\base\View
+{
 
-    private $layoutFile;
-    private $viewFile;
-    private $path;
-    private $view;
-    private $asset;
-    private $title;
+    private string $pathToLayoutFile;
+    private string $pathToViewFile;
+    private string $path;
+    private string $view;
+    private Asset $asset;
+    private string $title;
 
-    public function render($viewFile, $layoutFile, $variables, $path) {
+    public function render(string $pathToViewFile, string $pathToLayoutFile, array $variables, string $path): void
+    {
         foreach ($variables as $varName => $varValue) {
             $this->$varName = $varValue;
         }
-        $this->viewFile = $viewFile;
-        $this->layoutFile = $layoutFile;
-        $this->path = $path;      
+        $this->pathToViewFile = $pathToViewFile;
+        $this->pathToLayoutFile = $pathToLayoutFile;
+        $this->path = $path;
         $this->view = $this->getView();
         $this->renderLayout();
     }
 
-    private function renderView() {
+    private function renderView(): void
+    {
         echo $this->view;
     }
 
-    private function renderLayout() {
-        require $this->layoutFile;
+    private function renderLayout(): void
+    {
+        require $this->pathToLayoutFile;
     }
 
-    private function getView() {
+    private function getView(): string
+    {
         ob_start();
-        require $this->viewFile;
-        $this->title = TITLE;
+        require $this->pathToViewFile;
         return ob_get_clean();
     }
 
-    public function head() {
-        echo $this->asset->getHead($this->title);
+    private function head(): string
+    {
+        $title = $this->title ?? "";
+        return $this->asset->getHead($title);
     }
 
-    public function endBody() {
-        echo $this->asset->getEndBody();
+    private function endBody(): string
+    {
+        return $this->asset->getEndBody();
     }
 
 }

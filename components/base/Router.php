@@ -2,10 +2,11 @@
 
 namespace components\base;
 
-abstract class Router {
-
+abstract class Router
+{
     abstract public function route();
-    abstract public static function redirect($url);
-    
-    // abstract function getContentFromAction();
+
+    abstract public static function redirect(string $url);
+
+    // abstract function getContentFromAction(); достать контент из action и встроить его в action, который был вызван пользователем
 }
