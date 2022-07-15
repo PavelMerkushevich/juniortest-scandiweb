@@ -11,7 +11,7 @@ $this->asset = new AppAsset($this->path);
 </head>
 <body>
 <div id="wrapper">
-    <?php $this->renderView(); ?>
+    <?= $content ?>
 </div>
 <?= $this->endBody(); ?>
 </body>

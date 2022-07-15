@@ -8,7 +8,6 @@ class View extends \components\base\View
     private string $pathToLayoutFile;
     private string $pathToViewFile;
     private string $path;
-    private string $view;
     private Asset $asset;
     private string $title;
 
@@ -20,17 +19,12 @@ class View extends \components\base\View
         $this->pathToViewFile = $pathToViewFile;
         $this->pathToLayoutFile = $pathToLayoutFile;
         $this->path = $path;
-        $this->view = $this->getView();
         $this->renderLayout();
-    }
-
-    private function renderView(): void
-    {
-        echo $this->view;
     }
 
     private function renderLayout(): void
     {
+        $content = $this->getView();
         require $this->pathToLayoutFile;
     }
 
