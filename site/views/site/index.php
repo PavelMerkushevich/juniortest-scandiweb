@@ -2,12 +2,12 @@
 
 use components\routing\UrlHelper;
 
-$this->title = "Index";
+$this->title = "Product List";
 ?>
 
 <header>
     <div class="header-content">
-        <h1 class="title">Product List</h1>
+        <h1 class="title"><?= $this->title ?></h1>
         <div class="button-container">
             <a href="<?= UrlHelper::getLink('site/add-product') ?>">
                 <button class="btn btn-success header-button">ADD</button>

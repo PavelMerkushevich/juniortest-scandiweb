@@ -14,16 +14,16 @@ class Asset extends \components\base\Asset
         foreach ($this->css as $pathToFileView => $files) {
             if ($pathToFileView === "global" || $pathToFileView === $pathToThisView) {
                 foreach ($files as $file) {
-                    $path = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['SERVER_NAME'] . "/web/{$file}";
-                    $this->cssBlock .= "<link rel='stylesheet' href='{$path}'>";
+                    $path = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['SERVER_NAME'] . "/web/$file";
+                    $this->cssBlock .= "<link rel='stylesheet' href='$path'>";
                 }
             }
         }
         foreach ($this->js as $pathToFileView => $files) {
             if ($pathToFileView === "global" || $pathToFileView === $pathToThisView) {
                 foreach ($files as $file) {
-                    $path = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['SERVER_NAME'] . "/web/{$file}";
-                    $this->jsBlock .= "<script src='{$path}'></script>";
+                    $path = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['SERVER_NAME'] . "/web/$file";
+                    $this->jsBlock .= "<script src='$path'></script>";
                 }
             }
         }
@@ -32,7 +32,7 @@ class Asset extends \components\base\Asset
     public function getHead(string $title): string
     {
         if ($title !== "") {
-            $head = $this->cssBlock . "<title>{$title}</title>";
+            $head = $this->cssBlock . "<title>$title</title>";
         } else {
             $head = $this->cssBlock;
         }

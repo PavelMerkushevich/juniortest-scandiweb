@@ -13,7 +13,7 @@ class AppConfig extends \components\base\AppConfig
     public function __construct(string $configFileName = null)
     {
         if (isset($configFileName)) {
-            $configFilePath = $_SERVER['DOCUMENT_ROOT'] . "/site/config/{$configFileName}.php";
+            $configFilePath = $_SERVER['DOCUMENT_ROOT'] . "/site/config/$configFileName.php";
         } else {
             $configFilePath = $_SERVER['DOCUMENT_ROOT'] . "/site/config/config.php";
         }

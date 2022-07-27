@@ -1,73 +1,40 @@
 <?php
 
-use components\web\AppConfig;
 use components\routing\UrlHelper;
 
+$this->title = "Product Add";
 ?>
 
 <header>
     <div class="header-content">
-        <h1 class="title">Product List</h1>
+        <h1 class="title"><?= $this->title ?></h1>
         <div class="button-container">
-            <a href="<?php UrlHelper::getLink('site/add-product') ?>">
-                <button class="btn btn-success header-button">ADD</button>
+            <button class="btn btn-success header-button">Save</button>
+            <a href="<?= UrlHelper::getLink('site/index') ?>">
+                <button class="btn btn-secondary header-button">Cancel</button>
             </a>
-            <button id="delete-product-btn" class="btn btn-danger header-button">MASS DELETE</button>
         </div>
     </div>
 </header>
 <main>
     <div class="main-content">
-        <div class="product ">
-            <div class="delete-checkbox-container">
-                <input class="form-check-input delete-checkbox" type="checkbox" name="checkbox">
-            </div>
-            <div class="product-data-container">
-                <div class="product-data">Apple</div>
-            </div>
-        </div>
-        <div class="product">
-            <div class="delete-checkbox-container">
-                <input class="form-check-input delete-checkbox" type="checkbox" name="checkbox">
-            </div>
-            <div class="product-data-container">
-                <div class="product-data">Apple</div>
-            </div>
-        </div>
-        <div class="product">
-            <div class="delete-checkbox-container">
-                <input class="form-check-input delete-checkbox" type="checkbox" name="checkbox">
-            </div>
-            <div class="product-data-container">
-                <div class="product-data">Apple</div>
-            </div>
-        </div>
-        <div class="product">
-            <div class="delete-checkbox-container">
-                <input class="form-check-input delete-checkbox" type="checkbox" name="checkbox">
-            </div>
-            <div class="product-data-container">
-                <div class="product-data">Apple</div>
-            </div>
-        </div>
-        <div class="product">
-            <div class="delete-checkbox-container">
-                <input class="form-check-input delete-checkbox" type="checkbox" name="checkbox">
-            </div>
-            <div class="product-data-container">
-                <div class="product-data">Apple</div>
-            </div>
-        </div>
-        <div class="product">
-            <div class="delete-checkbox-container">
-                <input class="form-check-input delete-checkbox" type="checkbox" name="checkbox">
-            </div>
-            <div class="product-data-container">
-                <div class="product-data">Apple</div>
-            </div>
-        </div>
+        <form action="" id="product_form">
+            <label for="sku">SKU</label>
+            <input id="sku" class="form-control input" type="text">
+
+            <label for="name">Name</label>
+            <input id="name" class="form-control input" type="text">
+
+            <label for="price">Price ($)</label>
+            <input id="price" class="form-control input" type="text">
+
+            <label for="productType">Type Switcher</label>
+            <select name="productType" id="productType" class="form-select">
+                <option selected disabled>Select Type</option>
+                <option value="dvd">DVD</option>
+                <option value="book">Book</option>
+                <option value="furniture">Furniture</option>
+            </select>
+        </form>
     </div>
 </main>
-
-<script src="../../site/assets/libraries/masonry/masonry.pkgd.min.js"></script>
-<script src="../../site/assets/js/grid.js"></script>

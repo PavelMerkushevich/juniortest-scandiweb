@@ -2,8 +2,6 @@
 
 namespace components\web;
 
-use components\web\AppConfig;
-use components\web\View;
 use components\routing\Router;
 
 class Controller extends \components\base\Controller
@@ -33,9 +31,9 @@ class Controller extends \components\base\Controller
     protected function render(string $view, array $variables = []): void
     {
         $layout = $this->layout ?? $this->defaultLayout;
-        $pathToLayoutFile = $_SERVER['DOCUMENT_ROOT'] . "/site/views/layout/{$layout}.php";
+        $pathToLayoutFile = $_SERVER['DOCUMENT_ROOT'] . "/site/views/layout/$layout.php";
         $pathToViewFile = $this->getViewFile($view);
-        $pathToView = $this->getControllerNameInLC() . "/{$view}";
+        $pathToView = $this->getControllerNameInLC() . "/$view";
         $page = new View();
         $page->render($pathToViewFile, $pathToLayoutFile, $variables, $pathToView);
         die();
@@ -49,7 +47,7 @@ class Controller extends \components\base\Controller
     private function getViewFile(string $view): string
     {
         $viewFolderName = $this->getControllerNameInLC();
-        return $_SERVER['DOCUMENT_ROOT'] . "/site/views/{$viewFolderName}/{$view}.php";
+        return $_SERVER['DOCUMENT_ROOT'] . "/site/views/$viewFolderName/$view.php";
     }
 
     private function getControllerNameInLC(): string

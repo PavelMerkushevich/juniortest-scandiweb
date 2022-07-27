@@ -10,6 +10,7 @@ $config = [
         'router' => [
             'defaultController' => 'site',
             'rules' => [
+                '/' => 'site/index',
                 '/about' => 'site/about',
                 '/add-product' => 'site/add-product'
             ]
