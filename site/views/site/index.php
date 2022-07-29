@@ -6,7 +6,7 @@ $this->title = "Product List";
 ?>
 
 <header>
-    <div class="header-content">
+    <div id="header-content">
         <h1 class="title"><?= $this->title ?></h1>
         <div class="button-container">
             <a href="<?= UrlHelper::getLink('site/add-product') ?>">
@@ -16,55 +16,6 @@ $this->title = "Product List";
         </div>
     </div>
 </header>
-<main>
-    <div class="main-content">
-        <div class="product ">
-            <div class="delete-checkbox-container">
-                <input class="form-check-input delete-checkbox" type="checkbox" name="checkbox">
-            </div>
-            <div class="product-data-container">
-                <div class="product-data">Apple</div>
-            </div>
-        </div>
-        <div class="product">
-            <div class="delete-checkbox-container">
-                <input class="form-check-input delete-checkbox" type="checkbox" name="checkbox">
-            </div>
-            <div class="product-data-container">
-                <div class="product-data">Apple</div>
-            </div>
-        </div>
-        <div class="product">
-            <div class="delete-checkbox-container">
-                <input class="form-check-input delete-checkbox" type="checkbox" name="checkbox">
-            </div>
-            <div class="product-data-container">
-                <div class="product-data">Apple</div>
-            </div>
-        </div>
-        <div class="product">
-            <div class="delete-checkbox-container">
-                <input class="form-check-input delete-checkbox" type="checkbox" name="checkbox">
-            </div>
-            <div class="product-data-container">
-                <div class="product-data">Apple</div>
-            </div>
-        </div>
-        <div class="product">
-            <div class="delete-checkbox-container">
-                <input class="form-check-input delete-checkbox" type="checkbox" name="checkbox">
-            </div>
-            <div class="product-data-container">
-                <div class="product-data">Apple</div>
-            </div>
-        </div>
-        <div class="product">
-            <div class="delete-checkbox-container">
-                <input class="form-check-input delete-checkbox" type="checkbox" name="checkbox">
-            </div>
-            <div class="product-data-container">
-                <div class="product-data">Apple</div>
-            </div>
-        </div>
-    </div>
+<main id="root">
+
 </main>

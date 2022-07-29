@@ -21,7 +21,7 @@ header {
   border-bottom: 1px solid black;
 }
 
-.header-content {
+#header-content {
   display: -webkit-flex;
   display: -moz-flex;
   display: -ms-flex;
@@ -53,7 +53,7 @@ header {
   margin-left: 10px;
 }
 
-.main-content {
+#main-content {
   display: -webkit-flex;
   display: -moz-flex;
   display: -ms-flex;
@@ -66,7 +66,8 @@ header {
 .product {
   width: 14em;
   height: 10em;
-  margin-bottom: 30px;
+  margin-bottom: 1.5%;
+  background-color: white;
   border: 1px solid black;
   border-radius: 3px;
 }

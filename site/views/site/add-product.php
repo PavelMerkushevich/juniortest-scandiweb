@@ -6,7 +6,7 @@ $this->title = "Product Add";
 ?>
 
 <header>
-    <div class="header-content">
+    <div id="header-content">
         <h1 class="title"><?= $this->title ?></h1>
         <div class="button-container">
             <button class="btn btn-success header-button">Save</button>
@@ -17,7 +17,7 @@ $this->title = "Product Add";
     </div>
 </header>
 <main>
-    <div class="main-content">
+    <div id="main-content">
         <form action="" id="product_form">
             <label for="sku">SKU</label>
             <input id="sku" class="form-control input" type="text">
