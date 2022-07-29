@@ -15,7 +15,7 @@ class Asset extends \components\base\Asset
             if ($pathToFileView === "global" || $pathToFileView === $pathToThisView) {
                 foreach ($files as $file => $attrs) {
                     $path = $this->getPathToFile($file);
-                    $attrsBlock = is_array($attrs) ? $this->getAttrsBlock($attrs) : "";
+                    $attrsBlock = is_array($attrs) ? $this->getAttrsBlock($attrs) : null;
                     $this->cssBlock .= "<link rel='stylesheet' href='$path' $attrsBlock>";
                 }
             }
@@ -24,7 +24,7 @@ class Asset extends \components\base\Asset
             if ($pathToFileView === "global" || $pathToFileView === $pathToThisView) {
                 foreach ($files as $file => $attrs) {
                     $path = $this->getPathToFile($file);
-                    $attrsBlock = is_array($attrs) ? $this->getAttrsBlock($attrs) : "";
+                    $attrsBlock = is_array($attrs) ? $this->getAttrsBlock($attrs) : null;
                     $this->jsBlock .= "<script src='$path' $attrsBlock></script>";
                 }
             }
