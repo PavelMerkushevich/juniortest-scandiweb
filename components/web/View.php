@@ -5,8 +5,7 @@ namespace components\web;
 class View extends \components\base\View
 {
 
-    private string $pathToLayoutFile;
-    private string $pathToViewFile;
+    private string $content;
     private string $path;
     private Asset $asset;
     private string $title;
@@ -16,22 +15,20 @@ class View extends \components\base\View
         foreach ($variables as $varName => $varValue) {
             $this->$varName = $varValue;
         }
-        $this->pathToViewFile = $pathToViewFile;
-        $this->pathToLayoutFile = $pathToLayoutFile;
+        $this->content = $this->getView($pathToViewFile);
         $this->path = $path;
-        $this->renderLayout();
+        $this->renderLayout($pathToLayoutFile);
     }
 
-    private function renderLayout(): void
+    private function renderLayout(string $pathToLayoutFile): void
     {
-        $content = $this->getView();
-        require $this->pathToLayoutFile;
+        require $pathToLayoutFile;
     }
 
-    private function getView(): string
+    private function getView(string $pathToLayoutFile): string
     {
         ob_start();
-        require $this->pathToViewFile;
+        require $pathToLayoutFile;
         return ob_get_clean();
     }
 

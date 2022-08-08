@@ -1,5 +1,7 @@
 <?php
 
+/* @var $this components\web\View */
+
 use app\assets\AppAsset;
 
 $this->asset = new AppAsset($this->path);
@@ -11,7 +13,7 @@ $this->asset = new AppAsset($this->path);
 </head>
 <body>
 <div id="wrapper">
-    <?= $content ?>
+    <?= $this->content ?>
 </div>
 <?= $this->endBody(); ?>
 </body>

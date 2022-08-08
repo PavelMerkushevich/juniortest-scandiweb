@@ -1,5 +1,7 @@
 <?php
 
+/* @var $this components\web\View */
+
 use components\routing\UrlHelper;
 
 $this->title = "Product List";

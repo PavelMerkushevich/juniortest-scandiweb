@@ -1,5 +1,7 @@
 <?php
 
+/* @var $this components\web\View */
+
 $this->title = "Error {$this->errCode}";
 ?>
 <h1>Error <?= $this->errCode ?> !</h1>
