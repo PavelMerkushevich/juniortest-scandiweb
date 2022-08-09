@@ -1,0 +1,24 @@
+{
+  "name": "juniortest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PavelMerkushevich/juniortest-scandiweb.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PavelMerkushevich/juniortest-scandiweb/issues"
+  },
+  "homepage": "https://github.com/PavelMerkushevich/juniortest-scandiweb#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2"
+  }
+}

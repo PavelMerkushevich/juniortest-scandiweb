@@ -3,29 +3,20 @@ import initGrid from "../grid.js";
 
 function MainContent() {
 
-    React.useEffect(() => {
+    React.useEffect(function () {
         initGrid();
     });
 
-    return (
-        React.createElement("div", {
-                id: "main-content"
-            },
-            React.createElement(Product, null),
-            React.createElement(Product, null),
-            React.createElement(Product, null),
-            React.createElement(Product, null),
-            React.createElement(Product, null),
-            React.createElement(Product, null),
-            React.createElement(Product, null),
-            React.createElement(Product, null),
-            React.createElement(Product, null),
-            React.createElement(Product, null),
-            React.createElement(Product, null),
+    var content = [];
+    for (var i = 0; i < 10; i++) {
+        content.push(React.createElement(Product, null));
+    }
 
-
-        )
-    )
+    return React.createElement(
+        "div",
+        { id: "main-content" },
+        content
+    );
 }
 
 export default MainContent;
