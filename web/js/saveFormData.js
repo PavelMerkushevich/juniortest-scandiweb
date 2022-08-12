@@ -1,3 +1,0 @@
-function saveFormData() {
-    alert("ok");
-}

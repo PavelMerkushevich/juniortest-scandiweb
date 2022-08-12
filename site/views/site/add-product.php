@@ -6,18 +6,13 @@ use components\routing\UrlHelper;
 
 $this->title = "Product Add";
 ?>
+<div id="root">
+    <script>
+        var documentTitle = "<?= $this->title ?>";
+        var cancelButtonHref = "<?= UrlHelper::getLink('site/index') ?>"
+    </script>
+</div>
 
-<header>
-    <div id="header-content">
-        <h1 class="title"><?= $this->title ?></h1>
-        <div class="button-container">
-            <button class="btn btn-success header-button" onclick="saveFormData()">Save</button>
-            <a href="<?= UrlHelper::getLink('site/index') ?>">
-                <button class="btn btn-secondary header-button">Cancel</button>
-            </a>
-        </div>
-    </div>
-</header>
-<main id="root">
 
-</main>
+
+

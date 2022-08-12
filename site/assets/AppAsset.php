@@ -21,8 +21,7 @@ class AppAsset extends \components\web\Asset
             'js/react/index.js' => ["type" => "module"]
         ],
         'site/add-product' => [
-            'js/react/add-product.js' => ["type" => "module"],
-            'js/saveFormData.js' => null
+            'js/react/add-product.js' => ["type" => "module"]
         ]
     ];
 

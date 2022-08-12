@@ -6,7 +6,7 @@ use app\assets\AppAsset;
 
 $this->asset = new AppAsset($this->path);
 ?>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <?= $this->head(); ?>

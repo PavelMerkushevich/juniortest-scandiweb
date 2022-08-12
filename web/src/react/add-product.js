@@ -1,4 +1,4 @@
-import AddProductForm from "./AddProductForm.js";
+import AddProductContent from "./AddProductContent.js";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<AddProductForm/>);
+root.render(<AddProductContent/>);

@@ -14,8 +14,47 @@ var IndexContent = function IndexContent() {
 
     return React.createElement(
         "div",
-        { id: "main-content" },
-        content
+        null,
+        React.createElement(
+            "header",
+            null,
+            React.createElement(
+                "div",
+                { id: "header-content" },
+                React.createElement(
+                    "h1",
+                    { className: "title" },
+                    documentTitle
+                ),
+                React.createElement(
+                    "div",
+                    { className: "button-container" },
+                    React.createElement(
+                        "a",
+                        { href: addButtonHref },
+                        React.createElement(
+                            "button",
+                            { className: "btn btn-success header-button" },
+                            "ADD"
+                        )
+                    ),
+                    React.createElement(
+                        "button",
+                        { id: "delete-product-btn", className: "btn btn-danger header-button" },
+                        "MASS DELETE"
+                    )
+                )
+            )
+        ),
+        React.createElement(
+            "main",
+            null,
+            React.createElement(
+                "div",
+                { id: "main-content" },
+                content
+            )
+        )
     );
 };
 
