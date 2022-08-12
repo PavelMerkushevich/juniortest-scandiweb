@@ -1,4 +1,4 @@
-import MainContent from "./MainContent.js";
+import IndexContent from "./IndexContent.js";
 
 var root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<MainContent/>);
+root.render(<IndexContent/>);

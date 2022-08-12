@@ -25,7 +25,7 @@ class Asset extends \components\base\Asset
                 foreach ($files as $file => $attrs) {
                     $path = $this->getPathToFile($file);
                     $attrsBlock = is_array($attrs) ? $this->getAttrsBlock($attrs) : null;
-                    $this->jsBlock .= "<script src='$path' $attrsBlock></script>";
+                    $this->jsBlock .= "<script src='$path' $attrsBlock></script>\n";
                 }
             }
         }

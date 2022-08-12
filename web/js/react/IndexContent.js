@@ -1,7 +1,7 @@
 import Product from "./Product.js";
 import initGrid from "../grid.js";
 
-function MainContent() {
+var IndexContent = function IndexContent() {
 
     React.useEffect(function () {
         initGrid();
@@ -17,6 +17,6 @@ function MainContent() {
         { id: "main-content" },
         content
     );
-}
+};
 
-export default MainContent;
+export default IndexContent;

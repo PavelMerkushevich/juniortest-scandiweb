@@ -1,4 +1,4 @@
-function Product() {
+const  Product = function() {
     return (
         <div className="product">
             <div className="delete-checkbox-container">

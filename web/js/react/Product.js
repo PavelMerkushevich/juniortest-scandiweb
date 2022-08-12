@@ -1,4 +1,4 @@
-function Product() {
+var Product = function Product() {
     return React.createElement(
         "div",
         { className: "product" },
@@ -17,6 +17,6 @@ function Product() {
             )
         )
     );
-}
+};
 
 export default Product;

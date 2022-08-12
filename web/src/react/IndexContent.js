@@ -1,7 +1,7 @@
 import Product from "./Product.js";
 import initGrid from "../grid.js";
 
-function MainContent() {
+const IndexContent = function () {
 
     React.useEffect(() => {
         initGrid();
@@ -9,15 +9,15 @@ function MainContent() {
 
     let content = [];
     for (let i = 0; i < 10; i++) {
-       content.push(<Product/>)
+        content.push(<Product/>)
     }
 
     return (
-        <div id={"main-content"}>
+        <div id="main-content">
             {content}
         </div>
 
     )
 }
 
-export default MainContent;
+export default IndexContent;
