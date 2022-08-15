@@ -21,6 +21,7 @@ class AppAsset extends \components\web\Asset
             'js/react/index.js' => ["type" => "module"]
         ],
         'site/add-product' => [
+            'https://code.jquery.com/jquery-3.6.0.min.js' => null,
             'js/react/add-product.js' => ["type" => "module"]
         ]
     ];

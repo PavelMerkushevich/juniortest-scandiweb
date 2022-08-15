@@ -13,4 +13,14 @@ class App extends \components\base\App
         $router->route();
     }
 
+
+    public static function getPost(): ?array
+    {
+        if (isset($_POST) and $_SERVER["REQUEST_METHOD"] == "POST") {
+            return $_POST;
+        } else {
+            return null;
+        }
+    }
+
 }

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use components\web\App;
 use components\web\Controller;
 
 class SiteController extends Controller
@@ -16,6 +17,16 @@ class SiteController extends Controller
     public function actionAddProduct()
     {
         $this->render('add-product');
+    }
+
+    public function actionAddProductHandler()
+    {
+        $post = App::getPost();
+        if (isset($post)) {
+            foreach ($post as $key => $item) {
+                echo $key. "=>". $item . " ";
+            }
+        }
     }
 
 

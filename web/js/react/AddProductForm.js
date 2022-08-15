@@ -11,7 +11,8 @@ var AddProductForm = function AddProductForm() {
         selectAdditionsValue = _React$useState4[0],
         setSelectAdditionsValue = _React$useState4[1];
 
-    var selectHandler = function selectHandler(event) {
+    function selectHandler(event) {
+        event.target.className = "form-select select";
         var value = event.target.value;
         setSelectValue(value);
         switch (value) {
@@ -24,7 +25,7 @@ var AddProductForm = function AddProductForm() {
                         { htmlFor: "size" },
                         "Size (MB)"
                     ),
-                    React.createElement("input", { id: "size", className: "form-control input", type: "number" }),
+                    React.createElement("input", { id: "size", className: "form-control input num", type: "number", onChange: onChangeNumInput }),
                     React.createElement(
                         "span",
                         null,
@@ -46,7 +47,8 @@ var AddProductForm = function AddProductForm() {
                         { htmlFor: "weight" },
                         "Weight (KG)"
                     ),
-                    React.createElement("input", { id: "weight", className: "form-control input", type: "number" }),
+                    React.createElement("input", { id: "weight", className: "form-control input num", type: "number",
+                        onChange: onChangeNumInput }),
                     React.createElement(
                         "span",
                         null,
@@ -68,19 +70,21 @@ var AddProductForm = function AddProductForm() {
                         { htmlFor: "height" },
                         "Height (CM)"
                     ),
-                    React.createElement("input", { id: "height", className: "form-control input", type: "number" }),
+                    React.createElement("input", { id: "height", className: "form-control input num", type: "number",
+                        onChange: onChangeNumInput }),
                     React.createElement(
                         "label",
                         { htmlFor: "width" },
                         "Width (CM)"
                     ),
-                    React.createElement("input", { id: "width", className: "form-control input", type: "number" }),
+                    React.createElement("input", { id: "width", className: "form-control input num", type: "number", onChange: onChangeNumInput }),
                     React.createElement(
                         "label",
                         { htmlFor: "length" },
                         "Length (CM)"
                     ),
-                    React.createElement("input", { id: "length", className: "form-control input", type: "number" }),
+                    React.createElement("input", { id: "length", className: "form-control input num", type: "number",
+                        onChange: onChangeNumInput }),
                     React.createElement(
                         "span",
                         null,
@@ -93,7 +97,23 @@ var AddProductForm = function AddProductForm() {
                 ));
                 break;
         }
-    };
+    }
+
+    function onChangeNumInput(e) {
+        if (Number.isInteger(Number(e.target.value)) && e.target.value !== "" && Number(e.target.value) >= 0) {
+            e.target.className = "form-control input text is-valid";
+        } else {
+            e.target.className = "form-control input text is-invalid";
+        }
+    }
+
+    function onChangeInput(e) {
+        if (e.target.value !== "") {
+            e.target.className = "form-control input text is-valid";
+        } else {
+            e.target.className = "form-control input text is-invalid";
+        }
+    }
 
     return React.createElement(
         "div",
@@ -106,19 +126,19 @@ var AddProductForm = function AddProductForm() {
                 { htmlFor: "sku" },
                 "SKU"
             ),
-            React.createElement("input", { id: "sku", className: "form-control input", type: "text" }),
+            React.createElement("input", { id: "sku", className: "form-control input text", type: "text", onChange: onChangeInput }),
             React.createElement(
                 "label",
                 { htmlFor: "name" },
                 "Name"
             ),
-            React.createElement("input", { id: "name", className: "form-control input", type: "text" }),
+            React.createElement("input", { id: "name", className: "form-control input text", type: "text", onChange: onChangeInput }),
             React.createElement(
                 "label",
                 { htmlFor: "price" },
                 "Price ($)"
             ),
-            React.createElement("input", { id: "price", className: "form-control input", type: "number" }),
+            React.createElement("input", { id: "price", className: "form-control input num", type: "number", onChange: onChangeNumInput }),
             React.createElement(
                 "label",
                 { htmlFor: "productType" },

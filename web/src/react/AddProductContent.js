@@ -2,40 +2,90 @@ import AddProductForm from "./AddProductForm.js";
 
 const AddProductContent = function () {
 
-    const saveFormData = function () {
-        let sku = document.getElementById("sku").value;
-        let name = document.getElementById("name").value;
-        let price = document.getElementById("price").value;
-        let productType = document.getElementById("productType").value;
-        let productAttribute;
-        switch (productType) {
-            case "dvd":
-                productAttribute = document.getElementById("size").value;
-                break;
-            case "book":
-                productAttribute = document.getElementById("book").value;
-                break;
-            case "furniture":
-                let furnitureHeight = document.getElementById("height").value;
-                let furnitureWidth = document.getElementById("width").value;
-                let furnitureLength = document.getElementById("length").value;
-                productAttribute = furnitureHeight + "x" + furnitureWidth + "x" + furnitureLength;
-                break;
-        }
-        //TODO: Допили Ajax
-        fetch("https://api.example.com/items")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    setIsLoaded(true);
-                    setItems(result);
+    const [alertBlock, setAlertBlock] = React.useState(null);
+
+    function saveFormData() {
+        let inputs = document.getElementsByClassName("input");
+
+        if (validateForm(inputs)) {
+            clearError();
+            let request = {};
+            Array.from(inputs).map(input => {
+                request[input.id] = input.value
+            })
+            $.ajax({
+                url: 'http://juniortest/add-product-handler',
+                method: 'post',
+                dataType: 'html',
+                data: request,
+                success: function (data) {
+                    if (data.status) {
+                        console.log("ok");
+                    } else {
+                        console.log("bad");
+                        //viewValidationError()
+                    }
                 },
-                // Примечание: важно обрабатывать ошибки именно здесь, а не в блоке catch(),
-                // чтобы не перехватывать исключения из ошибок в самих компонентах.
-                (error) => {
-                    setIsLoaded(true);
-                    setError(error);
-                });
+                error: function () {
+                    viewError();
+                }
+            });
+        } else {
+            viewValidationError()
+        }
+
+        function viewValidationError() {
+            setAlertBlock(
+                <div className="alert alert-danger alert-dismissible fade show" role="alert"
+                     style={{marginTop: "10px"}}>
+                    Some fields are not filled or filled incorrectly!
+                </div>
+            );
+        }
+
+        function viewError() {
+            setAlertBlock(
+                <div className="alert alert-danger alert-dismissible fade show" role="alert"
+                     style={{marginTop: "10px"}}>
+                    Something went wrong!
+                    <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            );
+        }
+
+        function clearError() {
+            setAlertBlock("");
+        }
+
+    }
+
+    function validateForm(inputs) {
+        let invalid = false;
+        let numInputs = document.getElementsByClassName("input num");
+        let productType = document.getElementById("productType");
+
+
+        if (productType.value == "") {
+            productType.classList.add("is-invalid");
+            invalid = true;
+        }
+
+        Array.from(inputs).forEach(input => {
+            if (input.value === "") {
+                input.classList.add("is-invalid");
+                invalid = true;
+            }
+        });
+
+        Array.from(numInputs).forEach(input => {
+            if (Number.isInteger(input.value) && input.value >= 0) {
+                input.classList.add("is-invalid");
+                invalid = true;
+            }
+        });
+
+
+        return !invalid;
 
     }
 
@@ -54,6 +104,7 @@ const AddProductContent = function () {
                 </div>
             </header>
             <main>
+                <div>{alertBlock}</div>
                 <AddProductForm/>
             </main>
         </div>

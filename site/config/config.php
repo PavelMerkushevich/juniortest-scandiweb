@@ -12,7 +12,8 @@ $config = [
             'rules' => [
                 '/' => 'site/index',
                 '/about' => 'site/about',
-                '/add-product' => 'site/add-product'
+                '/add-product' => 'site/add-product',
+                '/add-product-handler' => 'site/add-product-handler'
             ]
         ],
         'httpErrorsHandler' => [
